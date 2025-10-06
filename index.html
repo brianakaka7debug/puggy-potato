@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Puggy Potato — Shake‑A‑Pet</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#8b5cf6">
+    <link rel="stylesheet" href="styles.css"/>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="card">
+        <header class="topbar">
+          <div>
+            <h1>🐶🥔 Puggy&nbsp;Potato — Shake‑A‑Pet</h1>
+            <p class="sub">Shake your device (or tap the big potato) to earn Cute Points, level up, and unlock adorable goodies. Progress saves automatically.</p>
+          </div>
+          <button id="startBtn" class="btn">Start / Allow Motion</button>
+        </header>
+
+        <div class="stats">
+          <div class="chip">Level <span id="level">1</span></div>
+          <div class="chip">Cute Points <span id="points">0</span></div>
+          <div class="chip">Next Level <span id="next">10</span></div>
+        </div>
+
+        <div class="progress" aria-label="level progress"><div id="bar" class="bar"></div></div>
+
+        <div id="stage" class="stage" aria-live="polite">
+          <div id="bgHearts" class="hearts" aria-hidden="true">💖 💗 💕 💞 💘</div>
+          <img id="art" class="puggy" src="images/level1_adult.png" alt="Puggy Potato"/>
+        </div>
+
+        <div class="accessories" id="accessoryTags"></div>
+
+        <div class="row mt">
+          <button id="tapBtn" class="btn" title="Tap if motion not available">Tap / Spacebar</button>
+          <button id="resetBtn" class="btn danger">Reset Progress</button>
+        </div>
+
+        <footer class="footer">
+          Tips: iOS needs HTTPS and a tap on <b>Start</b> to enable motion. If shake isn’t detected, use Tap/Spacebar. Some devices may not support vibration.
+        </footer>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
