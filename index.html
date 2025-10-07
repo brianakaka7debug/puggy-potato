@@ -2,48 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Puggy Potato — Shake‑A‑Pet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <title>Puggy Potato</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#8b5cf6">
     <link rel="stylesheet" href="styles.css"/>
   </head>
   <body>
-    <main class="wrap">
-      <section class="card">
-        <header class="topbar">
-          <div>
-            <h1>🐶🥔 Puggy&nbsp;Potato — Shake‑A‑Pet</h1>
-            <p class="sub">Shake your device (or tap the big potato) to earn Cute Points, level up, and unlock adorable goodies. Progress saves automatically.</p>
-          </div>
-          <button id="startBtn" class="btn">Start / Allow Motion</button>
-        </header>
+    <div class="progress-bar">
+      <div id="bar" class="bar"></div>
+      <div class="level-badge">Level <span id="level">1</span></div>
+    </div>
 
-        <div class="stats">
-          <div class="chip">Level <span id="level">1</span></div>
-          <div class="chip">Cute Points <span id="points">0</span></div>
-          <div class="chip">Next Level <span id="next">10</span></div>
-        </div>
+    <div id="stage" class="stage">
+      <div id="particles" class="particles"></div>
+      <img id="art" class="character" src="images/level1_adult.png" alt="Puggy Potato"/>
+    </div>
 
-        <div class="progress" aria-label="level progress"><div id="bar" class="bar"></div></div>
+    <button id="settingsBtn" class="icon-btn settings" aria-label="Settings">⚙️</button>
 
-        <div id="stage" class="stage" aria-live="polite">
-          <div id="bgHearts" class="hearts" aria-hidden="true">💖 💗 💕 💞 💘</div>
-          <img id="art" class="puggy" src="images/level1_adult.png" alt="Puggy Potato"/>
-        </div>
+    <div id="settingsPanel" class="settings-panel hidden">
+      <h2>Settings</h2>
+      <label class="toggle-row">
+        <span>Sound</span>
+        <input type="checkbox" id="soundToggle" checked/>
+      </label>
+      <label class="toggle-row">
+        <span>Vibration</span>
+        <input type="checkbox" id="vibrateToggle" checked/>
+      </label>
+      <button id="motionBtn" class="btn">Enable Shake</button>
+      <button id="resetBtn" class="btn danger">Reset Progress</button>
+      <button id="closeSettings" class="btn">Close</button>
+    </div>
 
-        <div class="accessories" id="accessoryTags"></div>
+    <div id="levelUpOverlay" class="level-up-overlay hidden">
+      <div class="level-up-content">
+        <div class="celebration">🎉</div>
+        <h2>Level Up!</h2>
+        <div class="new-level">Level <span id="newLevel"></span></div>
+      </div>
+    </div>
 
-        <div class="row mt">
-          <button id="tapBtn" class="btn" title="Tap if motion not available">Tap / Spacebar</button>
-          <button id="resetBtn" class="btn danger">Reset Progress</button>
-        </div>
-
-        <footer class="footer">
-          Tips: iOS needs HTTPS and a tap on <b>Start</b> to enable motion. If shake isn’t detected, use Tap/Spacebar. Some devices may not support vibration.
-        </footer>
-      </section>
-    </main>
     <script src="app.js"></script>
   </body>
 </html>
