@@ -9,7 +9,8 @@
     3: 'images/level3_rosy.png',
     4: 'images/level4_bows.png',
     5: 'images/level5_friends.png',
-    6: 'images/level6_beach.png'
+    6: 'images/level6_beach.png',
+    7: 'images/level7_ice.png'
   };
 
   const particles = ['💖', '💕', '✨', '⭐', '🌟', '💫', '🎀', '🌸', '🦴', '🥔'];
