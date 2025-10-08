@@ -31,7 +31,7 @@
     newLevel: document.getElementById('newLevel')
   };
 
-  let state = { points: 0, level: 1, soundEnabled: true, vibrateEnabled: true };
+  let state = { points: 0, level: 0, soundEnabled: true, vibrateEnabled: true };
   try {
     const saved = JSON.parse(localStorage.getItem('puggyPotatoV2'));
     if (saved && Number.isFinite(saved.points)) state = saved;
@@ -270,7 +270,7 @@
 
   els.resetBtn.addEventListener('click', () => {
     if (confirm('Reset all progress? This cannot be undone!')) {
-      state = {points: 0, level: 1, soundEnabled: state.soundEnabled, vibrateEnabled: state.vibrateEnabled};
+      state = {points: 0, level: 0, soundEnabled: state.soundEnabled, vibrateEnabled: state.vibrateEnabled};
       save();
       updateUI();
       els.settingsPanel.classList.add('hidden');
