@@ -29,7 +29,8 @@
     motionBtn: document.getElementById('motionBtn'),
     resetBtn: document.getElementById('resetBtn'),
     levelUpOverlay: document.getElementById('levelUpOverlay'),
-    newLevel: document.getElementById('newLevel')
+    newLevel: document.getElementById('newLevel'),
+    introOverlay: document.getElementById('introOverlay')
   };
 
   let state = { points: 0, level: 0, soundEnabled: true, vibrateEnabled: true };
@@ -109,6 +110,28 @@
     } catch(e) {}
   }
 
+  function playBalloonSound() {
+    if (!state.soundEnabled) return;
+    try {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      // Start low and sweep up like a balloon inflating
+      oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.8);
+      oscillator.type = 'sine';
+
+      gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 1);
+    } catch(e) {}
+  }
+
   function createParticle(x, y) {
     const particle = document.createElement('div');
     particle.className = 'particle';
@@ -153,13 +176,26 @@
     const before = state.level;
     while (state.level < 10 && state.points >= nextThreshold()){
       state.level++;
+
+      // Special handling for level 0 → 1 transition
       if (before === 0 && state.level === 1) {
-        els.art.classList.add('sprout');
-        setTimeout(() => els.art.classList.remove('sprout'), 800);
+        // Hide intro overlay
+        if (els.introOverlay) {
+          els.introOverlay.classList.add('hidden');
+        }
+
+        // Play balloon sound and grow animation
+        playBalloonSound();
+        els.art.classList.add('grow');
+        setTimeout(() => els.art.classList.remove('grow'), 1200);
+        haptic();
+        // Don't show level up overlay for first transition
+      } else {
+        // Normal level up for levels 2+
+        haptic();
+        celebrate();
+        showLevelUpOverlay();
       }
-      haptic();
-      celebrate();
-      showLevelUpOverlay();
     }
   }
 
@@ -275,6 +311,10 @@
       save();
       updateUI();
       els.settingsPanel.classList.add('hidden');
+      // Show intro overlay again
+      if (els.introOverlay) {
+        els.introOverlay.classList.remove('hidden');
+      }
     }
   });
 
@@ -287,6 +327,11 @@
   els.soundToggle.checked = state.soundEnabled;
   els.vibrateToggle.checked = state.vibrateEnabled;
   updateUI();
+
+  // Hide intro overlay if player is already past level 0
+  if (state.level > 0 && els.introOverlay) {
+    els.introOverlay.classList.add('hidden');
+  }
 
   // PWA
   if ('serviceWorker' in navigator){
