@@ -65,8 +65,15 @@
   // Audio system
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
+  function ensureAudioContext() {
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+  }
+
   function playTapSound() {
     if (!state.soundEnabled) return;
+    ensureAudioContext();
     try {
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
@@ -87,6 +94,7 @@
 
   function playLevelUpSound() {
     if (!state.soundEnabled) return;
+    ensureAudioContext();
     try {
       const notes = [523.25, 659.25, 783.99];
       notes.forEach((freq, i) => {
@@ -112,6 +120,7 @@
 
   function playBalloonSound() {
     if (!state.soundEnabled) return;
+    ensureAudioContext();
     try {
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
